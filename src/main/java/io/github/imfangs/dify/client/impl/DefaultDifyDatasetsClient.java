@@ -200,8 +200,16 @@ public class DefaultDifyDatasetsClient extends AbstractDifyClient implements Dif
 
     @Override
     public ChildChunkListResponse getChildChunks(String datasetId, String docummentId, String segmentId, String keyword, Integer page, Integer limit) throws IOException, DifyApiException {
+
+        Map<String, Object> queryParams = new HashMap<>();
+        addIfNotEmpty(queryParams, "keyword", keyword);
+        addIfNotNull(queryParams, "page", page);
+        addIfNotNull(queryParams, "limit", limit);
+
         String path = buildSegmentPath(datasetId, docummentId, segmentId) + CHILD_CHUNKS_PATH;
-        return executeGet(path, ChildChunkListResponse.class);
+        String url = buildUrlWithParams(path, queryParams);
+
+        return executeGet(url, ChildChunkListResponse.class);
     }
 
     @Override
