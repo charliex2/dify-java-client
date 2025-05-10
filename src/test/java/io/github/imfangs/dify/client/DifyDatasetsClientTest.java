@@ -3,7 +3,6 @@ package io.github.imfangs.dify.client;
 import io.github.imfangs.dify.client.config.DifyTestConfig;
 import io.github.imfangs.dify.client.exception.DifyApiException;
 import io.github.imfangs.dify.client.model.DifyConfig;
-import io.github.imfangs.dify.client.model.common.SimpleResponse;
 import io.github.imfangs.dify.client.model.datasets.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
