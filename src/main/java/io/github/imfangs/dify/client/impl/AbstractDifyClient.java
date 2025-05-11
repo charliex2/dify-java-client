@@ -318,12 +318,27 @@ public abstract class AbstractDifyClient {
                 urlBuilder.append(isFirstParam ? "?" : "&")
                         .append(entry.getKey())
                         .append("=")
-                        .append(entry.getValue());
+                        .append(encodeUrlParameter(String.valueOf(entry.getValue())));
                 isFirstParam = false;
             }
         }
 
         return urlBuilder.toString();
+    }
+
+    /**
+     * URL编码参数值
+     *
+     * @param value 需要编码的参数值
+     * @return 编码后的字符串
+     */
+    private String encodeUrlParameter(String value) {
+        try {
+            return java.net.URLEncoder.encode(value, "UTF-8")
+                    .replace("+", "%20"); // 将空格编码为 %20 而不是 +
+        } catch (java.io.UnsupportedEncodingException e) {
+            throw new RuntimeException("Failed to encode URL parameter", e);
+        }
     }
 
     /**
