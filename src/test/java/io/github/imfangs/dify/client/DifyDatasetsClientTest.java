@@ -387,6 +387,58 @@ public class DifyDatasetsClientTest {
     }
 
     /**
+     * 测试更新文档元数据
+     */
+    @Test
+    public void testUpdateDocumentMetadata() throws IOException, DifyApiException {
+        // 跳过测试如果没有测试知识库
+        if (testDatasetId == null) {
+            System.out.println("跳过测试，因为没有测试知识库");
+            return;
+        }
+
+        // 先创建一个文档
+        if (testDocumentId == null) {
+            createTestDocument();
+        }
+
+        // 创建元数据
+        CreateMetadataRequest createRequest = CreateMetadataRequest.builder()
+                .name("test_metadata")
+                .type("string")
+                .build();
+
+        MetadataResponse metadataResponse = datasetsClient.createMetadata(testDatasetId, createRequest);
+        assertNotNull(metadataResponse);
+        assertNotNull(metadataResponse.getId());
+
+        // 创建更新文档元数据请求
+        UpdateDocumentMetadataRequest.Metadata metadata = UpdateDocumentMetadataRequest.Metadata.builder()
+                .id(metadataResponse.getId())
+                .value("test_value")
+                .name(metadataResponse.getName())
+                .build();
+
+        UpdateDocumentMetadataRequest.OperationData operationData = UpdateDocumentMetadataRequest.OperationData.builder()
+                .documentId(testDocumentId)
+                .metadataList(java.util.Collections.singletonList(metadata))
+                .build();
+
+        System.out.println("operationData: " + operationData);
+
+        UpdateDocumentMetadataRequest request = UpdateDocumentMetadataRequest.builder()
+                .operationData(java.util.Collections.singletonList(operationData))
+                .build();
+
+        // 发送请求
+        String response = datasetsClient.updateDocumentMetadata(testDatasetId, request);
+
+        // 验证响应
+        assertNotNull(response);
+        System.out.println("更新文档元数据成功: " + response);
+    }
+
+    /**
      * 测试创建分段
      */
     @Test

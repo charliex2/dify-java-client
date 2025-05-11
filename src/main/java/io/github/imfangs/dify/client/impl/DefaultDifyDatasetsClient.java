@@ -254,6 +254,12 @@ public class DefaultDifyDatasetsClient extends AbstractDifyClient implements Dif
         return executeDelete(path, null, String.class);
     }
 
+    @Override
+    public String updateDocumentMetadata(String datasetId, UpdateDocumentMetadataRequest request) throws IOException, DifyApiException {
+        String path = DATASETS_PATH + "/" + datasetId +"/documents"+ METADATA_PATH;
+        return executePost(path, request, String.class);
+    }
+
     /**
      * 执行Multipart请求
      *

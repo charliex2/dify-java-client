@@ -316,4 +316,15 @@ public interface DifyDatasetsClient {
      * @throws DifyApiException API异常
      */
     String deleteMetadata(String datasetId, String metadataId) throws IOException, DifyApiException;
+
+
+    /**
+     * 更新文档元数据
+     * @param datasetId 知识库ID
+     * @param request 更新文档元数据请求
+     * @return 返回状态码 ‘200’
+     * @throws IOException IO异常
+     * @throws DifyApiException API异常
+     */
+    String updateDocumentMetadata(String datasetId, UpdateDocumentMetadataRequest request) throws IOException, DifyApiException;
 }
